@@ -32,8 +32,10 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: Set TF_VAR_project_url
-        run: echo "TF_VAR_project_url=https://github.com/${{ github.repository }}" >> $GITHUB_ENV
+      - name: Set Terraform environment variables
+        run: |
+          echo "TF_VAR_project_url=https://github.com/${{ github.repository }}" >> $GITHUB_ENV
+          echo "TF_VAR_access_ip=${{ secrets.ACCESS_IP }}" >> $GITHUB_ENV
 
       - name: Terraform Init
         working-directory: ./env
@@ -49,4 +51,4 @@ jobs:
 
       - name: Terraform Plan
         working-directory: ./env
-        run: terraform plan -input=false -out=tfplan
+        run: terraform plan -input=false

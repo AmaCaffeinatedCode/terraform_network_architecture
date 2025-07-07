@@ -19,7 +19,7 @@ variable "az" {
 variable "access_ip" {
   description = "Your IP for bastion SSH access"
   type = string
-  default = "192.168.0.0/32" # Example IP; Replace with the actual IP in secrets
+  default = "192.168.1.5/32" # Example IP; Replace with the actual IP in secrets
 }
 
 variable "bastion_ami" {
