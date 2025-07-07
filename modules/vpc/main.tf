@@ -1,4 +1,4 @@
-resource "aws_vpc" "this" {
+resource "aws_vpc" "vpc" {
   cidr_block = var.cidr_block
   enable_dns_support = var.enable_dns_support
   enable_dns_hostnames = var.enable_dns_hostnames
@@ -12,8 +12,8 @@ resource "aws_vpc" "this" {
   )
 }
 
-resource "aws_internet_gateway" "this" {
-  vpc_id = aws_vpc.this.id
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.vpc.id
 
   tags = merge(
     var.tags,
@@ -25,7 +25,7 @@ resource "aws_internet_gateway" "this" {
 }
 
 resource "aws_subnet" "public" {
-  vpc_id = aws_vpc.this.id
+  vpc_id = aws_vpc.vpc.id
   cidr_block = var.public_subnet_cidr
   availability_zone = var.az[0]
   map_public_ip_on_launch = true
@@ -40,7 +40,7 @@ resource "aws_subnet" "public" {
 }
 
 resource "aws_subnet" "private_a" {
-  vpc_id = aws_vpc.this.id
+  vpc_id = aws_vpc.vpc.id
   cidr_block = var.private_subnet_cidr_a
   availability_zone = var.az[1]
 
@@ -54,7 +54,7 @@ resource "aws_subnet" "private_a" {
 }
 
 resource "aws_subnet" "private_b" {
-  vpc_id = aws_vpc.this.id
+  vpc_id = aws_vpc.vpc.id
   cidr_block = var.private_subnet_cidr_b
   availability_zone = var.az[2]
 
@@ -68,7 +68,6 @@ resource "aws_subnet" "private_b" {
 }
 
 resource "aws_eip" "nat" {
-
   tags = merge(
     var.tags,
     {
@@ -81,7 +80,7 @@ resource "aws_eip" "nat" {
 resource "aws_nat_gateway" "nat" {
   allocation_id = aws_eip.nat.id
   subnet_id = aws_subnet.public.id
-  depends_on = [aws_internet_gateway.this]
+  depends_on = [aws_internet_gateway.igw]
 
   tags = merge(
     var.tags,
@@ -93,7 +92,7 @@ resource "aws_nat_gateway" "nat" {
 }
 
 resource "aws_route_table" "public" {
-  vpc_id = aws_vpc.this.id
+  vpc_id = aws_vpc.vpc.id
 
   tags = merge(
     var.tags,
@@ -107,7 +106,7 @@ resource "aws_route_table" "public" {
 resource "aws_route" "public_internet_access" {
   route_table_id = aws_route_table.public.id
   destination_cidr_block = "0.0.0.0/0"
-  gateway_id = aws_internet_gateway.this.id
+  gateway_id = aws_internet_gateway.igw.id
 }
 
 resource "aws_route_table_association" "public" {
@@ -116,7 +115,7 @@ resource "aws_route_table_association" "public" {
 }
 
 resource "aws_route_table" "private" {
-  vpc_id = aws_vpc.this.id
+  vpc_id = aws_vpc.vpc.id
 
   tags = merge(
     var.tags,

@@ -35,9 +35,9 @@ module "ec2" {
   instance_type = var.instance_type
   key_name = var.key_name
   subnet_ids = {
-    public = module.vpc.public_subnet_ids[0]
-    private_a = module.vpc.private_subnet_a_ids[0]
-    private_b = module.vpc.private_subnet_b_ids[0]
+    public = module.vpc.public_subnet_id
+    private_a = module.vpc.private_subnet_ids[0]
+    private_b = module.vpc.private_subnet_ids[1]
   }
   security_group_ids = {
     bastion_sg = module.networking.bastion_sg

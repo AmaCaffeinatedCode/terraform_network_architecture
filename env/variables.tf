@@ -19,7 +19,7 @@ variable "az" {
 variable "access_ip" {
   description = "Your IP for bastion SSH access"
   type = string
-  default = "0.0.0.0/0" # Replace with the actual IP for better security
+  default = "192.168.0.0/32" # Example IP; Replace with the actual IP in secrets
 }
 
 variable "bastion_ami" {
@@ -49,7 +49,7 @@ variable "tags" {
   type = map(string)
   default = {
     Owner = "infrastructure-team"
-    Environment = "production"
+    Environment = "dev"
     Project = "terraform_network_architecture"
   }
 }

@@ -1,10 +1,10 @@
 output "vpc_id" {
   description = "The ID of the VPC"
-  value = aws_vpc.this.id
+  value = aws_vpc.vpc.id
 }
 
-output "public_subnet_ids" {
-  description = "List of public subnet IDs"
+output "public_subnet_id" {
+  description = "Public subnet ID"
   value = aws_subnet.public.id
 }
 

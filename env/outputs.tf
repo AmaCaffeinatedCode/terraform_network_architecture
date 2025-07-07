@@ -3,19 +3,19 @@ output "vpc_id" {
   value = module.vpc.vpc_id
 }
 
-output "public_subnet_ids" {
-  description = "List of public subnet IDs"
-  value = module.vpc.public_subnet_ids
+output "public_subnet_id" {
+  description = "Public subnet ID"
+  value = module.vpc.public_subnet_id
 }
 
-output "private_subnet_a_ids" {
-  description = "List of private subnet A IDs"
-  value = module.vpc.private_subnet_a_ids
+output "private_subnet_a_id" {
+  description = "Private subnet A ID"
+  value = module.vpc.private_subnet_ids[0]
 }
 
-output "private_subnet_b_ids" {
-  description = "List of private subnet B IDs"
-  value = module.vpc.private_subnet_b_ids
+output "private_subnet_b_id" {
+  description = "Private subnet B ID"
+  value = module.vpc.private_subnet_ids[1]
 }
 
 output "bastion_sg_id" {
