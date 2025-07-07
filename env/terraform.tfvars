@@ -9,7 +9,6 @@ bastion_ami = "ami-0123456789abcdef0"
 private_ami = "ami-0fedcba9876543210"
 
 instance_type = "t2.micro"
-key_name = "example-key"
 
 tags = {
   Environment = "production"

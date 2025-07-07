@@ -38,12 +38,6 @@ variable "instance_type" {
   default = "t2.micro"
 }
 
-variable "key_name" {
-  description = "Key pair name for bastion SSH"
-  type = string
-  default = null
-}
-
 variable "tags" {
   description = "Common tags for all resources"
   type = map(string)

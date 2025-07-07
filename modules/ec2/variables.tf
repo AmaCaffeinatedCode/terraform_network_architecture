@@ -19,10 +19,10 @@ variable "instance_type" {
   default = "t2.micro"
 }
 
-variable "key_name" {
-  description = "Key pair name for bastion SSH access"
+variable "key_pair_name" {
+  description = "Name of the key pair to associate with EC2 instances"
   type = string
-  default = null
+  default = "bastion_key"
 }
 
 variable "subnet_ids" {

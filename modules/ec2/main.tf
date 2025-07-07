@@ -3,7 +3,7 @@ resource "aws_instance" "bastion" {
   instance_type = var.instance_type
   subnet_id = var.subnet_ids.public
   vpc_security_group_ids = [var.security_group_ids.bastion_sg]
-  key_name = var.key_name
+  key_name = var.key_pair_name
   associate_public_ip_address = true
   tags = merge(
     var.tags,
@@ -19,7 +19,7 @@ resource "aws_instance" "private_a" {
   instance_type = var.instance_type
   subnet_id = var.subnet_ids.private_a
   vpc_security_group_ids = [var.security_group_ids.private_a_sg]
-  key_name = var.key_name
+  key_name = var.key_pair_name
   associate_public_ip_address = false
   tags = merge(
     var.tags,

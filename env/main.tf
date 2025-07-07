@@ -26,6 +26,13 @@ module "security" {
   project_url = var.project_url
 }
 
+module "ssh_key" {
+  source   = "../modules/ssh_key"
+  name   = var.name
+  tags   = var.tags
+  project_url = var.project_url
+}
+
 module "ec2" {
   source = "../modules/ec2"
 
@@ -33,7 +40,7 @@ module "ec2" {
   bastion_ami = var.bastion_ami
   private_ami = var.private_ami
   instance_type = var.instance_type
-  key_name = var.key_name
+  key_pair_name = "${var.name}-key-pair"
   subnet_ids = {
     public = module.vpc.public_subnet_id
     private_a = module.vpc.private_subnet_ids[0]
