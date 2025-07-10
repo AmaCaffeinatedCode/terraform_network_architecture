@@ -39,7 +39,7 @@ variable "instance_type" {
 }
 
 variable "tags" {
-  description = "Common tags for all resources"
+  description = "Additional tags to apply to resources"
   type        = map(string)
   default = {
     Owner       = "infrastructure-team"

@@ -1,46 +1,23 @@
 # Terraform AWS Network Architecture
 
-A modular Terraform setup that builds a secure and production-like AWS network infrastructure, featuring EC2 access via a bastion host and SSM, following best practices for scalability, automation, and maintainability.
-
 ---
 
 ## Project Overview
 
-This project provisions a foundational AWS network architecture with the following:
-
-- Custom VPC with:
-  - 1 public subnet  
-  - 2 private subnets  
-  - Spread across multiple availability zones  
-- Internet Gateway and NAT Gateway for internet access  
-- Route tables for both public and private subnet traffic management  
-- 3 EC2 instances:
-  - Bastion host in the public subnet for SSH access  
-  - Private EC2 instance accessed via the bastion host  
-  - Private EC2 instance accessed via AWS Systems Manager (SSM)  
-- SSH key pair created and configured for the bastion and SSH-access EC2 instance  
-- Security groups for:
-  - Bastion host  
-  - Private instance accessed via SSH  
-  - Private instance accessed via SSM  
-- IAM role and instance profile configured to enable SSM connectivity  
-
-**Prerequisite:** A remote backend configured separately to manage Terraform state, consisting of:
-- An S3 bucket for centralized state storage  
-- A DynamoDB table for state locking  
+This project provisions a secure, modular AWS network architecture using Terraform. It creates a custom VPC with public and private subnets, route configurations, internet/NAT gateways, EC2 instances, IAM roles, and security groups — providing a production-ready networking baseline with both SSH and SSM access.
 
 ---
 
-
-## CI/CD Pipeline
-
-A GitHub Actions workflow (`.github/workflows/deploy.yml`) is included to automate Terraform validation on every push. The pipeline:
-
-- Initializes Terraform  
-- Formats and validates Terraform code 
-- Generates a Terraform plan for review
-
-It uses GitHub Actions environment secrets for secure authentication.
+## Resources Created
+- VPC with 1 public subnet and 2 private subnets  
+- Internet Gateway and NAT Gateway  
+- Public and private route tables  
+- Bastion EC2 instance (SSH access)  
+- Private EC2 instance (SSH via bastion)  
+- Private EC2 instance (SSM access)  
+- IAM role and instance profile for SSM access  
+- Security groups for each instance type  
+- Key pair for SSH  
 
 ---
 
@@ -52,14 +29,36 @@ The GitHub Actions CI/CD pipeline uses the following secrets:
 
 - `AWS_ACCESS_KEY_ID`
 - `AWS_SECRET_ACCESS_KEY`
-- `ACCESS_IP` – used to restrict SSH ingress from your IP
-- `PROJECT_URL` – injected automatically by the pipeline.
+- `ACCESS_IP` – restricts SSH ingress from your IP
 
 ### 2. Deployment
 
 Clone the repository and push changes to trigger the CI/CD workflow.
 
-> _Note: This project is intended for demonstration and validation purposes. CI/CD is configured for planning only, but can be extended to support automated deployment._
+---
+
+## CI/CD Pipeline
+
+A GitHub Actions workflow (`.github/workflows/deploy.yml`) is included to automate Terraform validation and deployment.
+
+The pipeline:
+- Initializes Terraform  
+- Formats and validates Terraform code  
+- Generates and applies a Terraform plan  
+
+It uses GitHub Actions environment secrets for secure authentication.  
+The `PROJECT_URL` variable is injected automatically by the pipeline and passed to Terraform for tagging purposes.
+
+---
+
+## Variables
+
+| Variable      | Description                                | Required |
+|---------------|--------------------------------------------|----------|
+| access_ip     | IP address allowed SSH access to bastion   | Yes      |
+| name          | Resources name prefix                      | Yes      |
+| tags          | Custom tags to apply to all resources      | Yes      |
+| project_url   | Project repository URL                     | Yes      |
 
 ---
 
@@ -76,3 +75,18 @@ All AWS resources are consistently tagged for clarity, traceability, and ownersh
 | `project_url` | `<project-repo-url>`                                                                  |
 
 ---
+
+## Outputs
+
+| Name              | Description                    |
+|-------------------|--------------------------------|
+| vpc_id            | ID of the created VPC          |
+| public_subnet_id  | Public subnet ID               |
+| private_subnet_ids| List of private subnet IDs     |
+| bastion_ip        | Public IP of the bastion host  |
+
+---
+
+## Additional Notes
+
+- This project uses a remote backend for Terraform state management. Ensure the backend (S3 bucket and DynamoDB table) is provisioned and accessible before running the pipeline.

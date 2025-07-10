@@ -4,7 +4,7 @@ variable "name" {
 }
 
 variable "tags" {
-  description = "Tags for IAM resources"
+  description = "Additional tags to apply to resources"
   type        = map(string)
   default     = {}
 }
