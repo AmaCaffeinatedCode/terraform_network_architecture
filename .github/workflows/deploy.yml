@@ -10,6 +10,7 @@ on:
 env:
   TF_VERSION: '1.12.2'
   AWS_REGION: 'us-east-1'
+  SECURE_ARTIFACTS_BUCKET: ${{ secrets.SECURE_ARTIFACTS_BUCKET }}
 
 jobs:
   terraform:
@@ -52,3 +53,12 @@ jobs:
       - name: Terraform Plan
         working-directory: ./env
         run: terraform plan -input=false
+
+#- name: Terraform Apply
+      #  working-directory: ./env
+      #  run: terraform apply -auto-approve
+
+#- name: Upload SSH Private Key to Secure Artifacts S3 Bucket
+      #  run: |
+      #    KEY_NAME=$(terraform output -raw name)
+      #    aws s3 cp ./modules/ssh_key/${KEY_NAME}-key-pair.pem s3://${SECURE_ARTIFACTS_BUCKET}/ssh-keys/${KEY_NAME}-key-pair.pem

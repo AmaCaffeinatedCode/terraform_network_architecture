@@ -23,6 +23,12 @@ This project provisions a secure, modular AWS network architecture using Terrafo
 
 ## Usage
 
+### Prerequisites
+
+- A remote backend and state lock table must be provisioned and accessible (S3 bucket and DynamoDB table) before running the pipeline.
+- An existing secure S3 bucket for SSH private key storage. The bucket name should be set as a secret (`SECURE_ARTIFACTS_BUCKET`) in your CI/CD environment.
+
+
 ### 1. Environment variables
 
 The GitHub Actions CI/CD pipeline uses the following secrets:
@@ -30,6 +36,7 @@ The GitHub Actions CI/CD pipeline uses the following secrets:
 - `AWS_ACCESS_KEY_ID`
 - `AWS_SECRET_ACCESS_KEY`
 - `ACCESS_IP` – restricts SSH ingress from your IP
+- `SECURE_ARTIFACTS_BUCKET` – name of an existing S3 bucket where the SSH private key will be securely uploaded by the pipeline.
 
 ### 2. Deployment
 
@@ -45,6 +52,7 @@ The pipeline:
 - Initializes Terraform  
 - Formats and validates Terraform code  
 - Generates and applies a Terraform plan  
+- Uploads the SSH private key to an S3 bucket
 
 It uses GitHub Actions environment secrets for secure authentication.  
 The `PROJECT_URL` variable is injected automatically by the pipeline and passed to Terraform for tagging purposes.
@@ -53,12 +61,7 @@ The `PROJECT_URL` variable is injected automatically by the pipeline and passed 
 
 ## Variables
 
-| Variable      | Description                                | Required |
-|---------------|--------------------------------------------|----------|
-| access_ip     | IP address allowed SSH access to bastion   | Yes      |
-| name          | Resources name prefix                      | Yes      |
-| tags          | Custom tags to apply to all resources      | Yes      |
-| project_url   | Project repository URL                     | Yes      |
+Refer to the [docs/variables.md](docs/variables.md) file for full variable details.
 
 ---
 
@@ -78,15 +81,4 @@ All AWS resources are consistently tagged for clarity, traceability, and ownersh
 
 ## Outputs
 
-| Name              | Description                    |
-|-------------------|--------------------------------|
-| vpc_id            | ID of the created VPC          |
-| public_subnet_id  | Public subnet ID               |
-| private_subnet_ids| List of private subnet IDs     |
-| bastion_ip        | Public IP of the bastion host  |
-
----
-
-## Additional Notes
-
-- This project uses a remote backend for Terraform state management. Ensure the backend (S3 bucket and DynamoDB table) is provisioned and accessible before running the pipeline.
+Refer to the [docs/outputs.md](docs/outputs.md) file for full outputs details.
