@@ -42,8 +42,8 @@ variable "tags" {
   description = "Additional tags to apply to resources"
   type        = map(string)
   default = {
-    Owner       = "infrastructure-team"
-    Project     = "terraform_network_architecture"
+    Owner   = "infrastructure-team"
+    Project = "terraform_network_architecture"
   }
 }
 

@@ -57,6 +57,6 @@ module "ec2" {
   }
   iam_instance_profile_ssm = module.security.ssm_instance_profile_arn
   tags                     = var.tags
-  environment = var.environment
+  environment              = var.environment
   project_url              = var.project_url
 }

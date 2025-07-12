@@ -11,8 +11,8 @@ private_ami = "ami-0fedcba9876543210"
 instance_type = "t2.micro"
 
 tags = {
-  Owner       = "infrastructure-team"
-  Project     = "terraform_network_architecture"
+  Owner   = "infrastructure-team"
+  Project = "terraform_network_architecture"
 }
 
 # "environment" will be set dinamically in the CI/CD pipeline
