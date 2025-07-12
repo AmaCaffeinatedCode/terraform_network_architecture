@@ -4,8 +4,7 @@ on:
   push:
     branches:
       - main
-      - dev
-      - staging
+      - '**'
 
 env:
   TF_VERSION: '1.12.2'
@@ -14,6 +13,7 @@ env:
 
 jobs:
   terraform:
+    if: github.ref == 'refs/heads/main' || (github.ref != 'refs/heads/main' && !contains(github.event.head_commit.message, '[skip-ci]'))
     name: 'Terraform Workflow'
     runs-on: ubuntu-latest
 
@@ -37,6 +37,14 @@ jobs:
         run: |
           echo "TF_VAR_project_url=https://github.com/${{ github.repository }}" >> $GITHUB_ENV
           echo "TF_VAR_access_ip=${{ secrets.ACCESS_IP }}" >> $GITHUB_ENV
+
+      - name: Set environment for prod (main branch)
+        run: echo "TF_VAR_environment=prod" >> $GITHUB_ENV
+        if: github.ref == 'refs/heads/main'
+
+      - name: Set environment for dev (other branches)
+        run: echo "TF_VAR_environment=dev" >> $GITHUB_ENV
+        if: github.ref != 'refs/heads/main'
 
       - name: Terraform Init
         working-directory: ./env

@@ -21,7 +21,8 @@ resource "aws_security_group" "bastion_sg" {
   tags = merge(
     var.tags,
     {
-      Name        = "${var.name}-bastion-sg"
+      Name        = "${var.name}-bastion-sg",
+      Environment = var.environment,
       project_url = var.project_url
     }
   )
@@ -50,7 +51,8 @@ resource "aws_security_group" "private_a_sg" {
   tags = merge(
     var.tags,
     {
-      Name        = "${var.name}-private-a-sg"
+      Name        = "${var.name}-private-a-sg",
+      Environment = var.environment,
       project_url = var.project_url
     }
   )
@@ -71,7 +73,8 @@ resource "aws_security_group" "private_b_sg" {
   tags = merge(
     var.tags,
     {
-      Name        = "${var.name}-private-b-sg"
+      Name        = "${var.name}-private-b-sg",
+      Environment = var.environment,
       project_url = var.project_url
     }
   )

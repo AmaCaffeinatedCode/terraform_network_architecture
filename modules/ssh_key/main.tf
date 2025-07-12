@@ -10,7 +10,8 @@ resource "aws_key_pair" "bastion" {
   tags = merge(
     var.tags,
     {
-      Name        = "${var.name}-key-pair"
+      Name        = "${var.name}-key-pair",
+      Environment = var.environment,
       project_url = var.project_url
     }
   )

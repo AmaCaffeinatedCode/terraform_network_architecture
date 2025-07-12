@@ -43,9 +43,14 @@ variable "tags" {
   type        = map(string)
   default = {
     Owner       = "infrastructure-team"
-    Environment = "dev"
     Project     = "terraform_network_architecture"
   }
+}
+
+variable "environment" {
+  type        = string
+  description = "Deployment environment"
+  default     = "dev"
 }
 
 variable "project_url" {

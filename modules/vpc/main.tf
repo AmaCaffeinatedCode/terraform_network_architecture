@@ -7,6 +7,7 @@ resource "aws_vpc" "vpc" {
     var.tags,
     {
       Name        = "${var.name}-vpc",
+      Environment = var.environment,
       project_url = var.project_url
     }
   )
@@ -19,6 +20,7 @@ resource "aws_internet_gateway" "igw" {
     var.tags,
     {
       Name        = "${var.name}-igw",
+      Environment = var.environment,
       project_url = var.project_url
     }
   )
@@ -34,6 +36,7 @@ resource "aws_subnet" "public" {
     var.tags,
     {
       Name        = "${var.name}-public-subnet",
+      Environment = var.environment,
       project_url = var.project_url
     }
   )
@@ -48,6 +51,7 @@ resource "aws_subnet" "private_a" {
     var.tags,
     {
       Name        = "${var.name}-private-subnet-a",
+      Environment = var.environment,
       project_url = var.project_url
     }
   )
@@ -62,6 +66,7 @@ resource "aws_subnet" "private_b" {
     var.tags,
     {
       Name        = "${var.name}-private-subnet-b",
+      Environment = var.environment,
       project_url = var.project_url
     }
   )
@@ -72,6 +77,7 @@ resource "aws_eip" "nat" {
     var.tags,
     {
       Name        = "${var.name}-nat-eip",
+      Environment = var.environment,
       project_url = var.project_url
     }
   )
@@ -86,6 +92,7 @@ resource "aws_nat_gateway" "nat" {
     var.tags,
     {
       Name        = "${var.name}-nat-gateway",
+      Environment = var.environment,
       project_url = var.project_url
     }
   )
@@ -98,6 +105,7 @@ resource "aws_route_table" "public" {
     var.tags,
     {
       Name        = "${var.name}-public-rt",
+      Environment = var.environment,
       project_url = var.project_url
     }
   )
@@ -121,6 +129,7 @@ resource "aws_route_table" "private" {
     var.tags,
     {
       Name        = "${var.name}-private-rt",
+      Environment = var.environment,
       project_url = var.project_url
     }
   )

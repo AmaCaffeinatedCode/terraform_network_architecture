@@ -9,6 +9,7 @@ resource "aws_instance" "bastion" {
     var.tags,
     {
       Name        = "${var.name}-bastion-host",
+      Environment = var.environment,
       project_url = var.project_url
     }
   )
@@ -25,6 +26,7 @@ resource "aws_instance" "private_a" {
     var.tags,
     {
       Name        = "${var.name}-private-instance-a",
+      Environment = var.environment,
       project_url = var.project_url
     }
   )
@@ -42,6 +44,7 @@ resource "aws_instance" "private_b" {
     var.tags,
     {
       Name        = "${var.name}-private-instance-b",
+      Environment = var.environment,
       project_url = var.project_url
     }
   )

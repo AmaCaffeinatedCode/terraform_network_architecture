@@ -50,6 +50,12 @@ variable "tags" {
   default     = {}
 }
 
+variable "environment" {
+  type        = string
+  description = "Deployment environment"
+  default     = "dev"
+}
+
 variable "project_url" {
   description = "URL to the GitHub repository for this project"
   type        = string

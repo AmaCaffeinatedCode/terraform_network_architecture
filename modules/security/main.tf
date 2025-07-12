@@ -15,7 +15,8 @@ resource "aws_iam_role" "ssm_role" {
   tags = merge(
     var.tags,
     {
-      Name        = "${var.name}-ssm-role"
+      Name        = "${var.name}-ssm-role",
+      Environment = var.environment,
       project_url = var.project_url
     }
   )
@@ -33,7 +34,8 @@ resource "aws_iam_instance_profile" "ssm_instance_profile" {
   tags = merge(
     var.tags,
     {
-      Name        = "${var.name}-ssm-instance-profile"
+      Name        = "${var.name}-ssm-instance-profile",
+      Environment = var.environment,
       project_url = var.project_url
     }
   )

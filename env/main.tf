@@ -5,6 +5,7 @@ module "vpc" {
   cidr_block  = var.vpc_cidr
   az          = var.az
   tags        = var.tags
+  environment = var.environment
   project_url = var.project_url
 }
 
@@ -15,6 +16,7 @@ module "networking" {
   vpc_id      = module.vpc.vpc_id
   access_ip   = var.access_ip
   tags        = var.tags
+  environment = var.environment
   project_url = var.project_url
 }
 
@@ -23,6 +25,7 @@ module "security" {
 
   name        = var.name
   tags        = var.tags
+  environment = var.environment
   project_url = var.project_url
 }
 
@@ -30,6 +33,7 @@ module "ssh_key" {
   source      = "../modules/ssh_key"
   name        = var.name
   tags        = var.tags
+  environment = var.environment
   project_url = var.project_url
 }
 
@@ -53,5 +57,6 @@ module "ec2" {
   }
   iam_instance_profile_ssm = module.security.ssm_instance_profile_arn
   tags                     = var.tags
+  environment = var.environment
   project_url              = var.project_url
 }
