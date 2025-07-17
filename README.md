@@ -61,7 +61,7 @@ The `PROJECT_URL` variable is injected automatically by the pipeline and passed 
 
 ## Variables
 
-Refer to the [docs/variables.md](docs/variables.md) file for full variable details.
+Refer to the [docs/variables.md](docs/01_variables.md) file for full variable details.
 
 ---
 
@@ -81,4 +81,4 @@ All AWS resources are consistently tagged for clarity, traceability, and ownersh
 
 ## Outputs
 
-Refer to the [docs/outputs.md](docs/outputs.md) file for full outputs details.
+Refer to the [docs/outputs.md](docs/02_outputs.md) file for full outputs details.
